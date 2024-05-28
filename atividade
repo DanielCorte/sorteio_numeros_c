@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define TAMANHO_VETOR 6
+
+// Função para verificar se um número já existe no vetor
+int numero_existe(int vetor[], int tamanho, int numero) {
+    for (int i = 0; i < tamanho; i++) {
+        if (vetor[i] == numero) {
+            return 1; // Retorna 1 se o número já existe no vetor
+        }
+    }
+    return 0; // Retorna 0 se o número não existe no vetor
+}
+
+int main() {
+    int numeros[TAMANHO_VETOR];
+    int sorteado, i = 0;
+
+    // Inicializa o gerador de números aleatórios
+    srand(time(NULL));
+
+    // Preenche o vetor com números aleatórios distintos
+    while (i < TAMANHO_VETOR) {
+        sorteado = rand() % 60 + 1; // Sorteia um número entre 1 e 60
+
+        // Verifica se o número já existe no vetor
+        if (!numero_existe(numeros, i, sorteado)) {
+            numeros[i] = sorteado;
+            i++;
+        }
+    }
+
+    // Ordena o vetor em ordem crescente (usando Bubble Sort para simplicidade)
+    for (int j = 0; j < TAMANHO_VETOR - 1; j++) {
+        for (int k = 0; k < TAMANHO_VETOR - 1 - j; k++) {
+            if (numeros[k] > numeros[k + 1]) {
+                int temp = numeros[k];
+                numeros[k] = numeros[k + 1];
+                numeros[k + 1] = temp;
+            }
+        }
+    }
+
+    // Mostra os números sorteados ao usuário
+    printf("Os numeros sorteados sao: ");
+    for (int j = 0; j < TAMANHO_VETOR; j++) {
+        printf("%d ", numeros[j]);
+    }
+    printf("\n");
+
+    return 0;
+}
